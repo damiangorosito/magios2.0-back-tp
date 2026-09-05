@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "profesionalId": 101,
+    "clienteId": 201,
+    "fecha": "2026-10-15",
+    "hora": "14:00",
+    "estado": "reservado"
+  }
+]
