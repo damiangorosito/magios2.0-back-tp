@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const profesionalesService = require('../services/profesionales.service');
+const clientesService = require('../services/clientes.service');
 
 const filePath = path.join(__dirname, '../data/turnos.json');
 
@@ -20,12 +22,44 @@ const guardarTurnos = (turnos) => {
   );
 };
 
+const fechaValida = (fecha) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return false;
+  const [anio, mes, dia] = fecha.split('-').map(Number);
+  const fechaParseada = new Date(Date.UTC(anio, mes - 1, dia));
+  return fechaParseada.getUTCFullYear() === anio
+    && fechaParseada.getUTCMonth() === mes - 1
+    && fechaParseada.getUTCDate() === dia;
+};
+
 // --- Controladores ---
 
 // GET: Obtener todos los turnos
 exports.obtenerTurnos = (req, res) => {
   try {
-    const turnos = leerTurnos();
+    const { profesionalId, clienteId, fecha, estado } = req.query;
+    const filtros = { profesionalId, clienteId, fecha, estado };
+    const filtrosUsados = Object.entries(filtros).filter(([, valor]) => valor !== undefined);
+    const estadosValidos = ['reservado', 'cancelado', 'atendido'];
+
+    if (profesionalId !== undefined && !Number.isInteger(Number(profesionalId))) {
+      return res.status(400).json({ error: 'profesionalId debe ser un número entero' });
+    }
+    if (clienteId !== undefined && !Number.isInteger(Number(clienteId))) {
+      return res.status(400).json({ error: 'clienteId debe ser un número entero' });
+    }
+    if (fecha !== undefined && !fechaValida(fecha)) {
+      return res.status(400).json({ error: 'fecha debe tener el formato YYYY-MM-DD y ser válida' });
+    }
+    if (estado !== undefined && !estadosValidos.includes(estado)) {
+      return res.status(400).json({ error: 'estado debe ser reservado, cancelado o atendido' });
+    }
+
+    const turnos = leerTurnos().filter((turno) => filtrosUsados.every(([campo, valor]) => {
+      if (campo === 'profesionalId' || campo === 'clienteId') {
+        return Number(turno[campo]) === Number(valor);
+      }
+      return turno[campo] === valor;
+    }));
 
     res.status(200).json(turnos);
   } catch (error) {
@@ -46,7 +80,7 @@ exports.crearTurno = (req, res) => {
       clienteId,
       fecha,
       hora
-    } = req.body;
+    } = req.body || {};
 
     // Validar que lleguen todos los datos
     if (
@@ -76,9 +110,9 @@ exports.crearTurno = (req, res) => {
     // Validar formato de fecha YYYY-MM-DD
     const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-    if (!fechaRegex.test(fecha)) {
+    if (!fechaRegex.test(fecha) || !fechaValida(fecha)) {
       return res.status(400).json({
-        error: 'La fecha debe tener el formato YYYY-MM-DD'
+        error: 'La fecha debe ser válida y tener el formato YYYY-MM-DD'
       });
     }
 
@@ -88,6 +122,18 @@ exports.crearTurno = (req, res) => {
     if (!horaRegex.test(hora)) {
       return res.status(400).json({
         error: 'La hora debe tener el formato HH:MM'
+      });
+    }
+
+    if (!profesionalesService.getById(profesionalIdNum)) {
+      return res.status(404).json({
+        error: 'El profesional indicado no existe'
+      });
+    }
+
+    if (!clientesService.getById(clienteIdNum)) {
+      return res.status(404).json({
+        error: 'El cliente indicado no existe'
       });
     }
 
