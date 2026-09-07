@@ -1,103 +1,115 @@
 const fs = require('fs');
 const path = require('path');
-const profesionalesService = require('./profesionales.service');
 
-const dataPath = path.join(__dirname, '../data/disponibilidad_horaria.json');
+const DATA_PATH = path.join(__dirname, '../data/disponibilidad_horaria.json');
 
+class DisponibilidadService {
+  constructor() {
+    this.ensureFileExists();
+  }
 
-function readDisponibilidad() {
-    try {
-        return JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-    } catch {
-        return [];
+  ensureFileExists() {
+    if (!fs.existsSync(DATA_PATH)) {
+      fs.writeFileSync(DATA_PATH, JSON.stringify([], null, 2));
     }
-}
+  }
 
-function writeDisponibilidad(data) {
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-}
+  readData() {
+    const data = fs.readFileSync(DATA_PATH, 'utf8');
+    return JSON.parse(data);
+  }
 
-// Convierte una hora en formato "hh:mm" a minutos
-function timeToMinutes(timeStr) {
-    const [h, m] = timeStr.split(':').map(Number);
-    return h * 60 + m;
-}
+  writeData(data) {
+    fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+  }
 
-// Verifica si hay solapamiento entre franjas horarias
-function haySolapamiento(franjas, diaSemana, horaInicio, horaFin, excludeId = null) {
-    const inicio = timeToMinutes(horaInicio);
-    const fin = timeToMinutes(horaFin);
-    let haySolapamiento = false;
+  // Obtener todas las disponibilidades
+  getAll() {
+    return this.readData();
+  }
 
-    for (const f of franjas) {
-        if (f.id === excludeId) continue; // Ignora si es la misma franja
-        if (f.diaSemana !== diaSemana) continue; // Si es diferente dia sigue comparando
+  // Obtener disponibilidad por ID
+  getById(id) {
+    const disponibilidades = this.readData();
+    return disponibilidades.find(d => String(d.id) === String(id));
+  }
 
-        const fi = timeToMinutes(f.horaInicio);
-        const ff = timeToMinutes(f.horaFin);
+  // Obtener disponibilidades por profesional
+  getByProfesional(profesionalId) {
+    const disponibilidades = this.readData();
+    return disponibilidades.filter(d => String(d.profesionalId) === String(profesionalId));
+  }
 
-        if (inicio < ff && fi < fin) {
-            haySolapamiento = true;
-            break;
-        }
+  // Obtener disponibilidades por día
+  getByDia(dia) {
+    const disponibilidades = this.readData();
+    return disponibilidades.filter(d => d.dia.toLowerCase() === String(dia).toLowerCase());
+  }
+
+  // Crear nueva disponibilidad
+  create(disponibilidadData) {
+    const disponibilidades = this.readData();
+    
+    // Validar que no exista duplicado (mismo profesional, día y horario)
+    const existe = disponibilidades.some(d => 
+      d.profesionalId === disponibilidadData.profesionalId &&
+      d.dia === disponibilidadData.dia &&
+      d.horaInicio === disponibilidadData.horaInicio &&
+      d.horaFin === disponibilidadData.horaFin
+    );
+
+    if (existe) {
+      throw new Error('Ya existe esta disponibilidad para el profesional en ese día y horario');
     }
-    return haySolapamiento;
+
+    const nuevaDisponibilidad = {
+      id: Date.now().toString(),
+      profesionalId: disponibilidadData.profesionalId,
+      dia: disponibilidadData.dia,
+      horaInicio: disponibilidadData.horaInicio,
+      horaFin: disponibilidadData.horaFin,
+      activo: true,
+      createdAt: new Date().toISOString()
+    };
+
+    disponibilidades.push(nuevaDisponibilidad);
+    this.writeData(disponibilidades);
+    return nuevaDisponibilidad;
+  }
+
+  // Actualizar disponibilidad
+  update(id, updateData) {
+    const disponibilidades = this.readData();
+    const index = disponibilidades.findIndex(d => String(d.id) === String(id));
+
+    if (index === -1) {
+      throw new Error('Disponibilidad no encontrada');
+    }
+
+    const disponibilidadActualizada = {
+      ...disponibilidades[index],
+      ...updateData,
+      updatedAt: new Date().toISOString()
+    };
+
+    disponibilidades[index] = disponibilidadActualizada;
+    this.writeData(disponibilidades);
+    return disponibilidadActualizada;
+  }
+
+  // Eliminar disponibilidad
+  delete(id) {
+    let disponibilidades = this.readData();
+    const index = disponibilidades.findIndex(d => String(d.id) === String(id));
+
+    if (index === -1) {
+      throw new Error('Disponibilidad no encontrada');
+    }
+
+    const [deleted] = disponibilidades.splice(index, 1);
+    this.writeData(disponibilidades);
+    return deleted;
+  }
 }
 
-// Devuelve todas las franjas horarias de profesional que coincide con la id
-exports.getByProfesional = (profesionalId) => {
-    return readDisponibilidad().filter(f => f.profesionalId === Number(profesionalId));
-};
-
-exports.create = (profesionalId, { diaSemana, horaInicio, horaFin }) => {
-    // Validar profesional existe
-    const prof = profesionalesService.getById(profesionalId);
-    if (!prof) throw new Error('PROFESIONAL_NO_EXISTE');
-
-    // Validar dia
-    const dia = Number(diaSemana);
-    if (!Number.isInteger(dia) || dia < 1 || dia > 7) throw new Error('DIA_INVALIDO');
-
-    // Validar horas
-    if (timeToMinutes(horaInicio) >= timeToMinutes(horaFin)) throw new Error('HORA_INVALIDA');
-
-    // Validar solapamiento
-    const todas = readDisponibilidad();
-    if (haySolapamiento(todas, dia, horaInicio, horaFin)) throw new Error('SOLAPAMIENTO');
-
-    // Busca id mas alto y le suma 1
-    const nextId = todas.reduce((max, f) => Math.max(max, f.id), 0) + 1;
-
-    const nueva = { id: nextId, profesionalId: Number(profesionalId), diaSemana: dia, horaInicio, horaFin };
-    todas.push(nueva);
-    writeDisponibilidad(todas);
-    return nueva;
-};
-
-exports.update = (id, profesionalId, { diaSemana, horaInicio, horaFin }) => {
-    const todas = readDisponibilidad();
-    const index = todas.findIndex(f => f.id === Number(id) && f.profesionalId === Number(profesionalId));
-    if (index === -1) return null;
-
-    const dia = Number(diaSemana);
-    if (!Number.isInteger(dia) || dia < 1 || dia > 7) throw new Error('DIA_INVALIDO');
-    if (timeToMinutes(horaInicio) >= timeToMinutes(horaFin)) throw new Error('HORA_INVALIDA');
-    if (haySolapamiento(todas, dia, horaInicio, horaFin, Number(id))) throw new Error('SOLAPAMIENTO');
-
-    todas[index].diaSemana = dia;
-    todas[index].horaInicio = horaInicio;
-    todas[index].horaFin = horaFin;
-
-    writeDisponibilidad(todas);
-    return todas[index];
-};
-
-exports.remove = (id, profesionalId) => {
-    const todas = readDisponibilidad();
-    const index = todas.findIndex(f => f.id === Number(id) && f.profesionalId === Number(profesionalId));
-    if (index === -1) return false; // No existe
-
-    todas.splice(index, 1);
-    writeDisponibilidad(todas);
-    return true;
-};
+module.exports = DisponibilidadService;

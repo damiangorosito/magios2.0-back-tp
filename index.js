@@ -3,6 +3,7 @@ const app = express();
 const profesionalesRouter = require("./routes/profesionales.route");
 const clientesRouter = require("./routes/clientes.route");
 const turnosRouter = require("./routes/turnos.routes");
+const disponibilidadRouter = require("./routes/disponibilidad.routes");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
@@ -30,6 +31,7 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.status(500).json({ error: 'Error interno del servidor' });
 });
+app.use('/disponibilidades', disponibilidadRouter);
 // Puerto de escucha
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
