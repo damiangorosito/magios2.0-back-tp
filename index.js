@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const profesionalesRouter = require("./routes/profesionales.route");
 const clientesRouter = require("./routes/clientes.route");
-const turnosRouter = require("./routes/turnos.route");
+const turnosRouter = require("./routes/turnos.routes");
+const disponibilidadRouter = require("./routes/disponibilidad.route");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 app.use('/profesionales', profesionalesRouter);
 app.use('/clientes', clientesRouter);
 app.use('/turnos', turnosRouter);
+app.use('/disponibilidades', disponibilidadRouter);
 // Puerto de escucha
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
