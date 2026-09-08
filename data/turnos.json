@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "profesionalId": 2,
+    "clienteId": 201,
+    "fecha": "2026-10-15",
+    "hora": "14:00",
+    "estado": "atendido"
+  },
+  {
+    "id": 2,
+    "profesionalId": 4,
+    "clienteId": 1,
+    "fecha": "2026-10-15",
+    "hora": "14:00",
+    "estado": "reservado"
+  }
+]
