@@ -18,6 +18,13 @@ app.get("/", (req, res) => {
 app.use('/profesionales', profesionalesRouter);
 app.use('/clientes', clientesRouter);
 
+
+// Manejo de errores 404
+app.use((req, res) => {
+  res.status(404).json({ message: "Ruta no encontrada" });
+}
+);
+
 // Puerto de escucha
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
