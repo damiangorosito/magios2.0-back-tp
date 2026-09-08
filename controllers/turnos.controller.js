@@ -171,6 +171,9 @@ exports.crearTurno = (req, res) => {
       });
     }
 
+    
+
+
     // Generar un ID nuevo tomando el ID más alto
     const nuevoId = turnos.length > 0
       ? Math.max(...turnos.map(t => Number(t.id) || 0)) + 1
@@ -210,6 +213,7 @@ exports.cambiarEstado = (req, res) => {
     const { id } = req.params;
     const { estado } = req.body;
 
+    //Regla 3: los estados que puede tener un turno son: reservado, cancelado y atendido.
     const estadosValidos = [
       'reservado',
       'cancelado',

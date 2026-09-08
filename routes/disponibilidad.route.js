@@ -4,6 +4,7 @@ const DisponibilidadController = require('../controllers/disponibilidad.controll
 
 const disponibilidadController = new DisponibilidadController();
 
+
 // Rutas específicas primero
 router.get('/', disponibilidadController.getAll);
 router.get('/profesional/:profesionalId', disponibilidadController.getByProfesional);

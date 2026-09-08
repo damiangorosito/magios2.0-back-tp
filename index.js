@@ -3,7 +3,7 @@ const app = express();
 const profesionalesRouter = require("./routes/profesionales.route");
 const clientesRouter = require("./routes/clientes.route");
 const turnosRouter = require("./routes/turnos.routes");
-const disponibilidadRouter = require("./routes/disponibilidad.routes");
+const disponibilidadRouter = require("./routes/disponibilidad.route");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
