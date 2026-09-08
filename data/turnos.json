@@ -5,7 +5,7 @@
     "clienteId": 201,
     "fecha": "2026-10-15",
     "hora": "14:00",
-    "estado": "atendido"
+    "estado": "cancelado"
   },
   {
     "id": 2,
@@ -13,6 +13,6 @@
     "clienteId": 1,
     "fecha": "2026-10-15",
     "hora": "14:00",
-    "estado": "reservado"
+    "estado": "cancelado"
   }
 ]

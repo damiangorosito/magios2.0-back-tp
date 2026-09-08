@@ -1,0 +1,9 @@
+[
+  {
+    "id_turno": 1,
+    "motivo": "Paciente no puede asistir",
+    "fecha_cancelacion": "2024-06-15",
+    "hora_cancelacion": "10:30",
+    "id_cancelacion": 1
+  }
+]
