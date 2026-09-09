@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const profesionalesService = require('../services/profesionales.service');
 const clientesService = require('../services/clientes.service');
+const DisponibilidadService = require('../services/disponibilidad.service');
+
+const disponibilidadService = new DisponibilidadService();
 
 const filePath = path.join(__dirname, '../data/turnos.json');
 
@@ -79,7 +82,8 @@ exports.crearTurno = (req, res) => {
       profesionalId,
       clienteId,
       fecha,
-      hora
+      hora,
+      
     } = req.body || {};
 
     // Validar que lleguen todos los datos
@@ -171,7 +175,19 @@ exports.crearTurno = (req, res) => {
       });
     }
 
+    // regla 3: Solo se pueden reservar horarios disponibles y dias que estén en la disponibilidad del profesional.
+    const profesionalDisponibilidad = disponibilidadService.getByProfesional(profesionalIdNum);
     
+    const disponibilidad = profesionalDisponibilidad.find(d =>
+      
+      d.horaInicio <= hora &&
+      d.horaFin >= hora
+    );
+    if (!disponibilidad) {
+      return res.status(400).json({
+        error: 'El profesional no tiene disponibilidad en ese horario'
+      });
+    }
 
 
     // Generar un ID nuevo tomando el ID más alto

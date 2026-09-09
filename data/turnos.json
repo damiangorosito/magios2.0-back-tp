@@ -14,5 +14,13 @@
     "fecha": "2026-10-15",
     "hora": "14:00",
     "estado": "cancelado"
+  },
+  {
+    "id": 3,
+    "profesionalId": 2,
+    "clienteId": 3,
+    "fecha": "2026-10-15",
+    "hora": "11:00",
+    "estado": "reservado"
   }
 ]
