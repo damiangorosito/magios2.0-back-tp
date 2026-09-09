@@ -35,6 +35,7 @@ exports.createProfesional = (req, res) => {
     const profesional = profesionalesService.create(req.body)
     res.status(201).json(profesional)
   } catch (error) {
+
     res.status(error.message.includes('uso') ? 409 : 500).json({ message: error.message })
   }
 }

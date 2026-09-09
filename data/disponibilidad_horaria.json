@@ -2,7 +2,7 @@
   {
     "id": "1",
     "profesionalId": 2,
-    "dia": "lunes",
+    "dias": ["lunes", "miércoles", "viernes"],
     "horaInicio": "08:00",
     "horaFin": "12:00",
     "activo": true,
@@ -11,7 +11,7 @@
   {
     "id": "2",
     "profesionalId": 4,
-    "dia": "martes",
+    "dias": ["martes", "jueves"],
     "horaInicio": "14:00",
     "horaFin": "18:00",
     "activo": true,

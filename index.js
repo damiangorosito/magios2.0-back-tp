@@ -4,6 +4,7 @@ const profesionalesRouter = require("./routes/profesionales.route");
 const clientesRouter = require("./routes/clientes.route");
 const turnosRouter = require("./routes/turnos.routes");
 const disponibilidadRouter = require("./routes/disponibilidad.route");
+const cancelacionesRouter = require("./routes/cancelaciones.route");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 app.use('/profesionales', profesionalesRouter);
 app.use('/clientes', clientesRouter);
+app.use('/cancelaciones', cancelacionesRouter);
 app.use('/turnos', turnosRouter);
 app.use('/disponibilidades', disponibilidadRouter);
 
@@ -32,6 +34,13 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.status(500).json({ error: 'Error interno del servidor' });
 });
+
+
+// Manejo de errores 404
+app.use((req, res) => {
+  res.status(404).json({ message: "Ruta no encontrada" });
+}
+);
 
 // Puerto de escucha
 app.listen(3000, () => {

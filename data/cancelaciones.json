@@ -1,9 +1,9 @@
 [
-    {
-        "id_turno": 1,
-        "id_profesional": 2,
-        "id_cliente": 201,
-        "fecha_cancelacion": "2026-10-15",
-        "hora_cancelacion": "14:00"
-    }
+  {
+    "id_turno": 1,
+    "motivo": "Paciente no puede asistir",
+    "fecha_cancelacion": "2024-06-15",
+    "hora_cancelacion": "10:30",
+    "id_cancelacion": 1
+  }
 ]

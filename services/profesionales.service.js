@@ -22,10 +22,20 @@ exports.getById = (id) => readProfesionales().find((p) => p.id === Number(id));
 // Crea un profesional nuevo, generando un id que no esté en uso
 exports.create = (data) => {
     if (!data.nombre || !data.apellido || !data.email || !data.telefono || !data.especialidad || !data.matricula) {
-        throw new Error("Faltan datos obligatorios para crear un profesional");
+        const err = new Error("Faltan datos obligatorios para crear un profesional");
+        err.status = 400;
+        throw err;
+        //
     }
     if (data.matricula && readProfesionales().some((p) => p.matricula === data.matricula)) {
-        throw new Error("La matrícula o el email ya están en uso por otro profesional");
+        const err = new Error("La matrícula ya está en uso por otro profesional");
+        err.status = 400;
+        throw err;
+    }
+    if (data.email && readProfesionales().some((p) => p.email === data.email)) {
+        const err = new Error("El email ya está en uso por otro profesional");
+        err.status = 400;
+        throw err;
     }
     const profesionales = readProfesionales();
     let nextId = profesionales.reduce((max, p) => Math.max(max, p.id), 0) + 1;
