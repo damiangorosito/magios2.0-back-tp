@@ -7,7 +7,7 @@ filePath = "./data/clientes.json"; // Ruta al archivo JSON
 
 const run = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/turnosdb");
     console.log("Conectado a MongoDB Atlas");
 
     // Leer archivo JSON

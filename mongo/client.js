@@ -4,7 +4,9 @@ dotenv.config();
 
 const mongoose = require("mongoose");
 
-const mongoUri = process.env.MONGODB_URI;
+// si no tiene el archivo .env, conecta a mongodb://localhost:27017/
+
+const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/turnosdb"; // Default URI if not provided in .env
 
 console.log("MongoDB URI:", mongoUri); // Log the MongoDB URI for debugging
 
