@@ -32,6 +32,7 @@ app.use("/disponibilidades", disponibilidadRouter);
 
 app.use(handleErrors);
 
+
 // Puerto de escucha
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");

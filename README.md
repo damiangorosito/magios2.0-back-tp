@@ -1,52 +1,206 @@
-# Magios 2.0 - TurnoFlex
+# Magios 2.0 – TurnoFlex
 
-Backend de una API REST para gestionar turnos de un centro de atención. La
-aplicación permite administrar profesionales, clientes y reservas, persistiendo
-los datos en archivos JSON (en esta primera instancia no se utiliza MongoDB).
+## Proyecto Backend – Segundo Parcial
+
+TurnoFlex es una API REST desarrollada con Node.js y Express para gestionar profesionales, clientes y turnos de un centro de atención.
+
+El proyecto busca resolver los problemas de la administración manual de turnos, como las reservas duplicadas, los conflictos de horarios y las dificultades para consultar o cancelar reservas.
+
+La segunda etapa del desarrollo incorpora como objetivo la persistencia de datos mediante MongoDB y Mongoose, reemplazando el almacenamiento inicial en archivos JSON.
+
+## Etapas de desarrollo del proyecto
+
+El proyecto **Magios 2.0 – TurnoFlex** se desarrolló en distintas etapas, siguiendo los contenidos trabajados durante la cursada de Desarrollo Web Backend.
+
+Cada etapa permitió ampliar las funcionalidades del sistema, mejorar su organización e incorporar nuevas herramientas para la gestión y persistencia de la información.
+
+### Etapa 1 – Desarrollo inicial de la API REST (Primer Parcial)
+
+En la primera entrega se desarrolló la estructura inicial del backend utilizando **Node.js y Express**.
+
+El objetivo fue construir una API REST funcional para administrar profesionales, clientes y turnos, aplicando los conceptos de rutas, controladores, servicios y métodos HTTP.
+
+**Trabajos realizados:**
+
+- Configuración inicial del proyecto con Node.js y Express.
+- Organización del código en rutas, controladores, servicios y modelos.
+- Implementación de operaciones CRUD para profesionales y clientes.
+- Desarrollo de funcionalidades para registrar, consultar y modificar turnos.
+- Incorporación de validaciones de datos y reglas de negocio.
+- Implementación de filtros de búsqueda.
+- Manejo de errores mediante respuestas HTTP.
+- Persistencia inicial de la información mediante archivos JSON.
+
+**Resultado:** una primera versión funcional del backend, con endpoints para administrar las principales entidades del sistema.
+
+### Etapa 2 – Integración de MongoDB (Segundo Parcial)
+
+La segunda etapa tiene como objetivo evolucionar el backend inicial mediante la incorporación de una base de datos NoSQL.
+
+Se trabaja con **MongoDB y Mongoose** para reemplazar la persistencia basada en archivos JSON y permitir que los datos se almacenen en colecciones.
+
+**Trabajos correspondientes a esta etapa:**
+
+- Configuración de la conexión entre Node.js y MongoDB.
+- Incorporación de Mongoose al proyecto.
+- Creación de esquemas y modelos para profesionales, clientes y turnos.
+- Implementación de referencias entre documentos.
+- Adaptación de las operaciones CRUD para utilizar MongoDB.
+- Incorporación de operaciones asincrónicas mediante async/await.
+- Adaptación de validaciones y reglas de negocio a la nueva persistencia.
+- Revisión del manejo de errores y de las respuestas HTTP.
+- Comprobación de la persistencia de datos después de reiniciar el servidor.
+
+**Resultado esperado:** una API REST que conserve las funcionalidades de la primera entrega, utilizando MongoDB como sistema de almacenamiento.
+
+### Etapa 3 – Pruebas, documentación y entrega final
+
+La última etapa está destinada a comprobar el funcionamiento del proyecto y preparar el material necesario para su presentación.
+
+**Actividades:**
+
+- Pruebas de endpoints mediante Postman o Thunder Client.
+- Verificación de operaciones CRUD.
+- Pruebas de reservas duplicadas y conflictos de horarios.
+- Comprobación de cancelaciones y cambios de estado.
+- Revisión de las respuestas HTTP ante datos inválidos.
+- Elaboración de la documentación técnica.
+- Diseño del diagrama de funcionalidad del sistema.
+- Actualización del README del repositorio.
+- Preparación de un video explicativo del proyecto.
+- Organización de los archivos y enlaces de la entrega final.
+
+**Resultado esperado:** una versión documentada y verificada del backend, acompañada por las evidencias necesarias para su evaluación.
+
+## Evolución tecnológica del proyecto
+
+| Característica | Primera entrega | Segunda entrega |
+|---|---|---|
+| Entorno | Node.js | Node.js |
+| Framework | Express | Express |
+| Arquitectura | Modular | Modular |
+| Persistencia | Archivos JSON | MongoDB |
+| Modelos | Modelos JavaScript | Esquemas Mongoose |
+| Operaciones CRUD | Sobre archivos JSON | Sobre MongoDB |
+| Reglas de negocio | Validaciones iniciales | Validaciones adaptadas |
+| Asincronismo | Implementación inicial | Async/await con Mongoose |
+| Pruebas | Endpoints de la API | Endpoints y persistencia |
+| Documentación | README inicial | README y documentación técnica |
 
 ## Integrantes y responsabilidades
 
-- **Franco Perrone Rey** - estructura general y CRUD de profesionales.
-- **David Fernando Giannoni** - consultas, pruebas y documentación.
+- **Franco Perrone Rey:** estructura general del backend, configuración de Express, rutas y controladores.
+- **David Fernando Giannoni:** gestión de profesionales y clientes, operaciones CRUD y validaciones.
+- **Carlos Sebastian Gauto Martina:** integración de MongoDB y Mongoose, modelos y lógica de reservas.
+- **Damián Gorosito:** documentación técnica, diagramas, descripción de endpoints, registro de pruebas y preparación de la entrega final.
 
+El trabajo se organiza de manera colaborativa, con responsabilidades distribuidas entre los integrantes y revisiones conjuntas para integrar las distintas partes del sistema.
 
-## Tecnologías
+## Tecnologías utilizadas
 
-- Node.js
-- Express
-- Pug para la ruta de inicio
-- JSON como persistencia
+- **Node.js:** ejecución de JavaScript en el servidor.
+- **Express:** desarrollo de la API REST.
+- **MongoDB:** base de datos NoSQL para la persistencia de información, prevista para la segunda entrega.
+- **Mongoose:** definición de esquemas y modelos para MongoDB, prevista para la segunda entrega.
+- **Pug:** plantilla utilizada para la ruta de inicio.
+- **Postman o Thunder Client:** pruebas de los endpoints.
+- **Git y GitHub:** control de versiones y repositorio del proyecto.
 
 ## Instalación y ejecución
 
-```bash
-npm install
-node index.js
-```
+### Requisitos
 
-Para ejecutar con recarga automática:
+- Node.js y npm.
+- MongoDB instalado y funcionando, una vez integrada la segunda entrega.
+- Un editor de código, como Visual Studio Code.
 
-```bash
-npx nodemon index.js
-```
+### Instalación de dependencias
 
-La API queda disponible en `http://localhost:3000`.
+Clonar el repositorio:
 
-## Recursos y endpoints
+`git clone https://github.com/fraperrone/magios2.0-back-tp.git`
 
-Todos los cuerpos deben enviarse como `Content-Type: application/json`.
+Ingresar a la carpeta del proyecto:
+
+`cd magios2.0-back-tp`
+
+Instalar dependencias:
+
+`npm install`
+
+### Configuración de MongoDB
+
+Una vez implementada la conexión, configurar la URI de MongoDB según el archivo de configuración del proyecto.
+
+Ejemplo de conexión local:
+
+`mongodb://127.0.0.1:27017/turnoflex`
+
+No publicar contraseñas ni archivos con credenciales reales en GitHub.
+
+### Iniciar el servidor
+
+`node index.js`
+
+Para utilizar Nodemon:
+
+`npx nodemon index.js`
+
+La API se encuentra disponible en:
+
+`http://localhost:3000`
+
+## Arquitectura del proyecto
+
+El backend está organizado en módulos que separan las distintas responsabilidades:
+
+- **Rutas:** definen los endpoints y métodos HTTP.
+- **Controladores:** procesan las solicitudes y generan las respuestas.
+- **Servicios:** administran las operaciones y reglas de negocio.
+- **Modelos:** representan los datos del sistema.
+- **Middlewares:** procesan solicitudes y administran errores.
+
+La segunda etapa requiere adaptar las operaciones de persistencia para trabajar con MongoDB mediante Mongoose y async/await.
+
+## Modelo de datos
+
+El sistema contempla tres entidades principales.
+
+### Profesional
+
+Representa a una persona que brinda atención. Sus datos incluyen nombre, apellido, correo electrónico, teléfono, especialidad y matrícula.
+
+### Cliente
+
+Representa a una persona que solicita turnos. Sus datos incluyen nombre, correo electrónico y teléfono.
+
+### Turno
+
+Representa una reserva asociada a un profesional y un cliente. Contiene fecha, hora y estado.
+
+Los estados permitidos son:
+
+- `reservado`
+- `cancelado`
+- `atendido`
+
+En la segunda entrega, las relaciones entre turnos, profesionales y clientes deben implementarse mediante referencias a documentos de MongoDB.
+
+## Endpoints de la API
+
+Todas las solicitudes que envían datos deben utilizar `Content-Type: application/json`.
 
 ### Profesionales
 
-| Método | URL | Descripción |
+| Método | Endpoint | Descripción |
 |---|---|---|
-| GET | `/profesionales` | Lista profesionales. |
-| GET | `/profesionales/:id` | Obtiene un profesional por ID. |
-| POST | `/profesionales` | Crea un profesional. |
-| PUT | `/profesionales/:id` | Reemplaza los datos de un profesional. |
-| DELETE | `/profesionales/:id` | Elimina un profesional. |
+| GET | `/profesionales` | Consultar profesionales |
+| GET | `/profesionales/:id` | Consultar por ID |
+| POST | `/profesionales` | Registrar profesional |
+| PUT | `/profesionales/:id` | Modificar profesional |
+| DELETE | `/profesionales/:id` | Eliminar profesional |
 
-Ejemplo de `POST /profesionales`:
+Ejemplo de solicitud POST:
 
 ```json
 {
@@ -61,15 +215,15 @@ Ejemplo de `POST /profesionales`:
 
 ### Clientes
 
-| Método | URL | Descripción |
+| Método | Endpoint | Descripción |
 |---|---|---|
-| GET | `/clientes` | Lista clientes. |
-| GET | `/clientes/:id` | Obtiene un cliente por ID. |
-| POST | `/clientes` | Crea un cliente. |
-| PUT | `/clientes/:id` | Actualiza un cliente. |
-| DELETE | `/clientes/:id` | Elimina un cliente. |
+| GET | `/clientes` | Consultar clientes |
+| GET | `/clientes/:id` | Consultar por ID |
+| POST | `/clientes` | Registrar cliente |
+| PUT | `/clientes/:id` | Modificar cliente |
+| DELETE | `/clientes/:id` | Eliminar cliente |
 
-Ejemplo de `POST /clientes`:
+Ejemplo de solicitud POST:
 
 ```json
 {
@@ -81,13 +235,13 @@ Ejemplo de `POST /clientes`:
 
 ### Turnos
 
-| Método | URL | Descripción |
+| Método | Endpoint | Descripción |
 |---|---|---|
-| GET | `/turnos` | Lista turnos. |
-| POST | `/turnos` | Reserva un turno. |
-| PATCH | `/turnos/:id/estado` | Cambia el estado del turno. |
+| GET | `/turnos` | Consultar turnos |
+| POST | `/turnos` | Registrar reserva |
+| PATCH | `/turnos/:id/estado` | Modificar estado |
 
-Body de `POST /turnos`:
+Ejemplo de solicitud POST:
 
 ```json
 {
@@ -98,7 +252,11 @@ Body de `POST /turnos`:
 }
 ```
 
-Body de `PATCH /turnos/1/estado`:
+**Importante:** los identificadores numéricos pertenecen al ejemplo de la primera entrega. Si se utilizan ObjectId de MongoDB, deben reemplazarse por identificadores reales.
+
+Ejemplo de cancelación:
+
+`PATCH /turnos/:id/estado`
 
 ```json
 {
@@ -106,34 +264,44 @@ Body de `PATCH /turnos/1/estado`:
 }
 ```
 
-Estados permitidos: `reservado`, `cancelado` y `atendido`.
+### Filtros de consulta
 
-## Consultas
+El endpoint `GET /turnos` permite filtrar por:
 
-El listado de turnos admite filtros combinables:
+- Profesional: `/turnos?profesionalId=2`
+- Cliente y estado: `/turnos?clienteId=1&estado=reservado`
+- Fecha: `/turnos?fecha=2026-10-15`
 
-- `GET /turnos?profesionalId=2`
-- `GET /turnos?clienteId=1&estado=reservado`
-- `GET /turnos?fecha=2026-10-15`
+Los ejemplos deben actualizarse si cambia el formato de los identificadores.
 
-También se pueden consultar recursos individuales con `GET
-/profesionales/:id` y `GET /clientes/:id`.
+## Reglas de negocio
 
-## Validaciones y manejo de errores (punto 4)
+El sistema debe respetar las siguientes reglas:
 
-- Se validan campos obligatorios, tipos de datos, formato de email, IDs,
-  fechas reales (`YYYY-MM-DD`), horas (`HH:MM`) y estados permitidos.
-- Al reservar se verifica que existan el profesional y el cliente relacionados.
-- No se permiten turnos reservados superpuestos para un profesional ni dos
-  turnos del mismo cliente en la misma fecha y hora.
-- `400` indica datos o parámetros inválidos.
-- `404` indica que el recurso o relación solicitada no existe.
-- `409` indica conflicto con una regla de negocio.
-- `500` indica un error interno y `204` confirma una eliminación exitosa.
-- Las rutas inexistentes y los cuerpos JSON mal formados devuelven mensajes
-  claros.
+1. Un profesional no puede tener dos turnos reservados en el mismo horario.
+2. Un cliente no puede reservar dos turnos iguales.
+3. Solo pueden reservarse horarios disponibles.
+4. Los turnos admiten los estados reservado, cancelado y atendido.
+5. La cancelación modifica el estado del turno sin eliminar su registro.
+6. Las reservas deben relacionarse con profesionales y clientes existentes.
 
-Ejemplo de error:
+## Validaciones y respuestas HTTP
+
+La API valida campos obligatorios, tipos de datos, formatos de correo electrónico, fechas, horarios y estados permitidos.
+
+Las respuestas HTTP utilizadas son:
+
+| Código | Significado |
+|---|---|
+| 200 | Operación exitosa |
+| 201 | Recurso creado |
+| 204 | Eliminación exitosa |
+| 400 | Datos inválidos |
+| 404 | Recurso inexistente |
+| 409 | Conflicto de reserva |
+| 500 | Error interno del servidor |
+
+Ejemplo de respuesta de error:
 
 ```json
 {
@@ -141,16 +309,49 @@ Ejemplo de error:
 }
 ```
 
-## Pruebas con Postman o Thunder Client
+## Pruebas del sistema
 
-Pruebas mínimas sugeridas:
+Las pruebas se realizan mediante Postman o Thunder Client.
 
-1. `POST /clientes` con datos válidos: debe responder `201`.
-2. `POST /turnos` con IDs existentes: debe responder `201`.
-3. Repetir el turno anterior: debe responder `409`.
-4. `POST /turnos` con un ID inexistente: debe responder `404`.
-5. `PATCH /turnos/1/estado` con `estado: "cancelado"`: debe responder `200`.
-6. Enviar una fecha, email o estado inválido: debe responder `400`.
+Casos principales:
 
-La evidencia de ejecución debe incorporarse a la entrega como captura de
-Postman o Thunder Client mostrando la URL, método, body y respuesta.
+1. Registrar un profesional.
+2. Registrar un cliente.
+3. Consultar profesionales y clientes.
+4. Reservar un turno disponible.
+5. Intentar registrar un turno duplicado.
+6. Intentar reservar con un profesional inexistente.
+7. Consultar turnos mediante filtros.
+8. Cancelar un turno.
+9. Enviar datos inválidos.
+10. Verificar la persistencia de datos después de reiniciar el servidor.
+
+Las evidencias y resultados de las pruebas se incorporan a la documentación técnica final.
+
+## Documentación complementaria
+
+- **Documentación técnica en PDF:** [Agregar enlace]
+- **Diagrama de funcionalidad:** [Agregar enlace]
+- **Video de presentación:** [Agregar enlace]
+- **Documento de entrega:** [Agregar enlace de Google Drive]
+
+## Bibliografía
+
+Material proporcionado por el docente:
+
+- MongoDB – Ejemplos de Colecciones.
+- MongoDB – Operaciones CRUD v3.
+- Anotaciones clases 2 de MongoDB.
+- MongoDB – Operadores Básicos Genérico.
+
+Documentación oficial de las tecnologías utilizadas:
+
+- https://nodejs.org/
+- https://expressjs.com/
+- https://www.mongodb.com/docs/
+- https://mongoosejs.com/docs/
+
+## Repositorio
+
+https://github.com/fraperrone/magios2.0-back-tp
+
