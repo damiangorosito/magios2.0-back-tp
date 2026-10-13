@@ -1,11 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const profesionalesService = require('../services/profesionales.service');
-const clientesService = require('../services/clientes.service');
-const DisponibilidadService = require('../services/disponibilidad.service');
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import * as profesionalesService from "../services/profesionales.service.js";
+import * as clientesService from "../services/clientes.service.js";
+import DisponibilidadService from "../services/disponibilidad.service.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const disponibilidadService = new DisponibilidadService();
-
 const filePath = path.join(__dirname, '../data/turnos.json');
 
 // Auxiliares para JSON
@@ -37,7 +39,7 @@ const fechaValida = (fecha) => {
 // --- Controladores ---
 
 // GET: Obtener todos los turnos
-exports.obtenerTurnos = (req, res) => {
+export const obtenerTurnos = (req, res) => {
   try {
     const { profesionalId, clienteId, fecha, estado } = req.query;
     const filtros = { profesionalId, clienteId, fecha, estado };
@@ -76,7 +78,7 @@ exports.obtenerTurnos = (req, res) => {
 
 
 // POST: Crear / Reservar un turno
-exports.crearTurno = (req, res) => {
+export const crearTurno = (req, res) => {
   try {
     const {
       profesionalId,
@@ -224,7 +226,7 @@ exports.crearTurno = (req, res) => {
 
 
 // PATCH: Modificar el estado del turno
-exports.cambiarEstado = (req, res) => {
+export const cambiarEstado = (req, res) => {
   try {
     const { id } = req.params;
     const { estado } = req.body;

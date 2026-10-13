@@ -1,25 +1,19 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 dotenv.config();
 
-const mongoose = require("mongoose");
-
-// si no tiene el archivo .env, conecta a mongodb://localhost:27017/
-
-const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/turnosdb"; // Default URI if not provided in .env
-
-console.log("MongoDB URI:", mongoUri); // Log the MongoDB URI for debugging
+// si no tiene el archivo .env, conecta a mongodb://localhost:27017/turnosdb
+const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/turnosdb";
 
 const connectDB = async () => {
-  await mongoose
-    .connect(mongoUri)
-    .then(() => {
-      console.log("Connected to MongoDB successfully");
-    })
-    .catch((error) => {
-      console.error("Error connecting to MongoDB:", error);
-      process.exit(1);
-    });
+  try {
+    await mongoose.connect(mongoUri);
+    console.log("Connected to MongoDB successfully");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
 };
 
-module.exports = connectDB;
+export default connectDB;

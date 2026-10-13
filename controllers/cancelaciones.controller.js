@@ -1,12 +1,12 @@
 
 
-const cancelacionesService = require('../services/cancelaciones.service');
-const turnosService = require('../services/turnos.service');
+import * as cancelacionesService from "../services/cancelaciones.service.js";
+import * as turnosService from "../services/turnos.service.js";
 
 const validarId = (id) => /^\d+$/.test(String(id));
 
 
-exports.getCancelaciones = (req, res) => {
+export const getCancelaciones = (req, res) => {
     try {
         const cancelaciones = cancelacionesService.getAllCancelaciones();
         res.json(cancelaciones);
@@ -16,7 +16,7 @@ exports.getCancelaciones = (req, res) => {
     }
 };
 
-exports.createCancelacion = (req, res) => {
+export const createCancelacion = (req, res) => {
     try {
         const { id_turno, motivo, fecha_cancelacion, hora_cancelacion } = req.body || {};
         if (!id_turno || !motivo || !fecha_cancelacion || !hora_cancelacion) {
