@@ -1,15 +1,15 @@
 // controllers/clientes.controller.js
 
-const clientesService = require("../services/clientes.service");
+import * as clientesService from "../services/clientes.service.js";
 
 
 // Obtener todos los clientes
-exports.getClientes = async (req, res) => {
+export const getClientes = async (req, res) => {
   res.json(await clientesService.getAll());
 };
 
 // Obtener un cliente por ID
-exports.getClienteById = async (req, res) => {
+export const getClienteById = async (req, res) => {
   const cliente = await clientesService.getById(req.params.id);
   if (!cliente) {
     const err = new Error("Cliente no encontrado");
@@ -20,7 +20,7 @@ exports.getClienteById = async (req, res) => {
 };
 
 // Crear un nuevo cliente
-exports.createCliente = async (req, res) => {
+export const createCliente = async (req, res) => {
   const { nombre, email, telefono } = req.body || {};
   try {
     const cliente = await clientesService.create({
@@ -37,7 +37,7 @@ exports.createCliente = async (req, res) => {
 };
 
 // Actualizar un cliente existente
-exports.updateCliente = async (req, res) => {
+export const updateCliente = async (req, res) => {
   const cliente = await clientesService.update(req.params.id, {
     nombre: req.body.nombre.trim(),
     email: req.body.email.trim(),
@@ -53,7 +53,7 @@ exports.updateCliente = async (req, res) => {
 };
 
 // Eliminar un cliente
-exports.deleteCliente = async (req, res) => {
+export const deleteCliente = async (req, res) => {
   const eliminado = await clientesService.remove(req.params.id);
   if (!eliminado){
     const err = new Error("Cliente no encontrado");

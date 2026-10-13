@@ -1,8 +1,9 @@
+import express from "express";
+import * as cancelacionesController from "../controllers/cancelaciones.controller.js";
 
-const router = require('express').Router();
-const cancelacionesController = require('../controllers/cancelaciones.controller');
+const router = express.Router();
 
 router.get('/', cancelacionesController.getCancelaciones);
 router.post('/', cancelacionesController.createCancelacion);
 
-module.exports = router;
+export default router;

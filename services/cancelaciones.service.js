@@ -1,7 +1,10 @@
-const fs = require('fs')
-const path = require('path')
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const cancelacionesFilePath = path.join(__dirname, '../data/cancelaciones.json')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const cancelacionesFilePath = path.join(__dirname, '../data/cancelaciones.json');
 
 function getCancelaciones() {
   const cancelacionesData = fs.readFileSync(cancelacionesFilePath, 'utf-8')
@@ -15,16 +18,16 @@ function saveCancelaciones(cancelaciones) {
   )
 }
 
-exports.getAllCancelaciones = () => {
+export const getAllCancelaciones = () => {
   return getCancelaciones()
 }
 
-exports.getCancelacionById = (id) => {
+export const getCancelacionById = (id) => {
   const cancelaciones = getCancelaciones()
   return cancelaciones.find((c) => c.id_cancelacion === Number(id))
 }
 
-exports.createCancelacion = (data) => {
+export const createCancelacion = (data) => {
   const cancelaciones = getCancelaciones()
   let nextId =
     cancelaciones.reduce((max, c) => Math.max(max, c.id_cancelacion), 0) + 1
@@ -35,7 +38,7 @@ exports.createCancelacion = (data) => {
   return newCancelacion
 }
 
-exports.updateCancelacion = (id, data) => {
+export const updateCancelacion = (id, data) => {
   const cancelaciones = getCancelaciones()
   const index = cancelaciones.findIndex((c) => c.id_cancelacion === Number(id))
   if (index === -1) return null

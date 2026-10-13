@@ -1,9 +1,10 @@
-const express = require('express');
+import express from "express";
+import * as turnosController from "../controllers/turnos.controller.js";
+
 const router = express.Router();
-const turnosController = require('../controllers/turnos.controller');
 
 router.get('/', turnosController.obtenerTurnos);
 router.post('/', turnosController.crearTurno);
 router.put('/:id', turnosController.cambiarEstado);
 
-module.exports = router;
+export default router;
