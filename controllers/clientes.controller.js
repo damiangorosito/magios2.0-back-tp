@@ -63,3 +63,18 @@ exports.deleteCliente = async (req, res) => {
     
   res.status(204).send();
 };
+
+// parte de vistas
+// controlador de vistas para clientes
+
+exports.renderClientes = async (req, res) => {
+  const clientes = await clientesService.getAll();
+  res.render("clientes", { clientes });
+}
+
+// mostrar por id
+
+exports.renderClienteById = async (req, res) => {
+  const cliente = await clientesService.getById(req.params.id);
+  res.render("cliente-detalle", { cliente });
+}
