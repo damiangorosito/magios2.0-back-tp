@@ -13,8 +13,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set("view engine", "pug");
-app.set("views", "./views");
+app.set('view engine', 'pug')
+app.set('views', './views')
 
 // Middleware para parsear JSON y formularios HTML
 app.use(express.json());
@@ -24,16 +24,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Ruta básica
-app.get("/", (req, res) => {
-  res.render("home", { title: "Home Page" });
-});
+app.get('/', (req, res) => {
+  res.render('home')
+})
 
-app.use("/profesionales", profesionalesRouter);
-app.use("/clientes", clientesRouter);
-app.use("/cancelaciones", cancelacionesRouter);
-app.use("/turnos", turnosRouter);
-app.use("/disponibilidades", disponibilidadRouter);
+// rutas
 
+app.use('/profesionales', profesionalesRouter)
+app.use('/clientes', clientesRouter)
+app.use('/cancelaciones', cancelacionesRouter)
+app.use('/turnos', turnosRouter)
+app.use('/disponibilidades', disponibilidadRouter)
 
 app.use(handleErrors);
 
@@ -42,5 +43,5 @@ await connectDB();
 
 // Puerto de escucha
 app.listen(3000, () => {
-  console.log("Servidor corriendo en http://localhost:3000");
-});
+  console.log('Servidor corriendo en http://localhost:3000')
+})
