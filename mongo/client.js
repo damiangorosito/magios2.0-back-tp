@@ -4,10 +4,11 @@ import mongoose from "mongoose";
 dotenv.config();
 
 // si no tiene el archivo .env, conecta a mongodb://localhost:27017/turnosdb
-const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/turnosdb";
+const mongoUri = process.env.MONGODB_URI_ATLAS || "mongodb://localhost:27017/turnosdb";
 
 const connectDB = async () => {
   try {
+    console.log("intendado conectar a: " + mongoUri)
     await mongoose.connect(mongoUri);
     console.log("Connected to MongoDB successfully");
   } catch (error) {
