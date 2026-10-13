@@ -1,6 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const dataPath = path.join(__dirname, '../data/profesionales.json');
 
 //Lee los profesionales del archivo data/profesionales.json
@@ -14,13 +17,13 @@ function writeProfesionales(profesionales) {
 }
 
 // Devuelve todos los profesionales
-exports.getAll = () => readProfesionales();
+export const getAll = () => readProfesionales();
 
 // Busca un profesional por id
-exports.getById = (id) => readProfesionales().find((p) => p.id === Number(id));
+export const getById = (id) => readProfesionales().find((p) => p.id === Number(id));
 
 // Crea un profesional nuevo, generando un id que no esté en uso
-exports.create = (data) => {
+export const create = (data) => {
     if (!data.nombre || !data.apellido || !data.email || !data.telefono || !data.especialidad || !data.matricula) {
         const err = new Error("Faltan datos obligatorios para crear un profesional");
         err.status = 400;
@@ -53,7 +56,7 @@ exports.create = (data) => {
 };
 
 // Actualiza los datos de un profesional existente, mantiene el id original
-exports.update = (id, data) => {
+export const update = (id, data) => {
     const profesionales = readProfesionales();
     const index = profesionales.findIndex((p) => p.id === Number(id));
     if (index === -1) return null;
@@ -78,7 +81,7 @@ exports.update = (id, data) => {
     return profesionales[index];
 };
 
-exports.delete = (id) => {
+export const remove = (id) => {
     const profesionales = readProfesionales();
     const index = profesionales.findIndex((p) => p.id === Number(id));
     if (index === -1) return null;

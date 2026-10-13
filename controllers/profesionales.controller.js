@@ -1,4 +1,4 @@
-const profesionalesService = require('../services/profesionales.service')
+import * as profesionalesService from "../services/profesionales.service.js";
 
 const validarId = (id) => /^\d+$/.test(String(id))
 const validarProfesional = (data) => {
@@ -8,12 +8,12 @@ const validarProfesional = (data) => {
 }
 
 // Obtener todos los profesionales
-exports.getProfesionales = (req, res) => {
+export const getProfesionales = (req, res) => {
   res.json(profesionalesService.getAll())
 }
 
 // Obtener un profesional por ID
-exports.getProfesionalById = (req, res) => {
+export const getProfesionalById = (req, res) => {
   if (!validarId(req.params.id)) {
     return res.status(400).json({ message: 'El ID del profesional debe ser un número entero' })
   }
@@ -25,7 +25,7 @@ exports.getProfesionalById = (req, res) => {
 }
 
 // Crear un nuevo profesional
-exports.createProfesional = (req, res) => {
+export const createProfesional = (req, res) => {
   try {
     if (!validarProfesional(req.body)) {
       return res.status(400).json({
@@ -41,7 +41,7 @@ exports.createProfesional = (req, res) => {
 }
 
 // Actualizar un profesional existente
-exports.updateProfesional = (req, res) => {
+export const updateProfesional = (req, res) => {
 
   try{
 
@@ -66,11 +66,11 @@ exports.updateProfesional = (req, res) => {
 }
 
 // Eliminar un profesional
-exports.deleteProfesional = (req, res) => {
+export const deleteProfesional = (req, res) => {
   if (!validarId(req.params.id)) {
     return res.status(400).json({ message: 'El ID del profesional debe ser un número entero' })
   }
-  const profesional = profesionalesService.delete(req.params.id)
+  const profesional = profesionalesService.remove(req.params.id)
   if (!profesional) {
     return res.status(404).json({ message: 'Profesional no encontrado' })
   }

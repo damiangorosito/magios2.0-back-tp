@@ -1,9 +1,8 @@
-const express = require('express');
+import express from "express";
+import DisponibilidadController from "../controllers/disponibilidad.controller.js";
+
 const router = express.Router();
-const DisponibilidadController = require('../controllers/disponibilidad.controller');
-
 const disponibilidadController = new DisponibilidadController();
-
 
 // Rutas específicas primero
 router.get('/', disponibilidadController.getAll);
@@ -14,4 +13,4 @@ router.post('/', disponibilidadController.create);
 router.put('/:id', disponibilidadController.update);
 router.delete('/:id', disponibilidadController.delete);
 
-module.exports = router;
+export default router;

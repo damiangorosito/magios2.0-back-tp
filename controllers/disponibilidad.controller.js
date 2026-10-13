@@ -1,4 +1,4 @@
-const DisponibilidadService = require('../services/disponibilidad.service');
+import DisponibilidadService from "../services/disponibilidad.service.js";
 
 const disponibilidadService = new DisponibilidadService();
 
@@ -166,4 +166,4 @@ class DisponibilidadController {
   }
 }
 
-module.exports = DisponibilidadController;
+export default DisponibilidadController;

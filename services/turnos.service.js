@@ -1,8 +1,10 @@
-const fs = require('fs')
-const path = require('path')
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-
-const turnosFilePath = path.join(__dirname, '../data/turnos.json')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const turnosFilePath = path.join(__dirname, '../data/turnos.json');
 
 function getTurnos() {
   const turnosData = fs.readFileSync(turnosFilePath, 'utf-8')
@@ -16,16 +18,16 @@ function saveTurnos(turnos) {
   )
 }
 
-exports.getAllTurnos = () => {
+export const getAllTurnos = () => {
     return getTurnos()
 }
 
-exports.getTurnoById = (id) => {
+export const getTurnoById = (id) => {
     const turnos = getTurnos()
     return turnos.find((t) => t.id === Number(id))
 }
 
-exports.updateTurno = (id, data) => {
+export const updateTurno = (id, data) => {
     const turnos = getTurnos()
     const index = turnos.findIndex((t) => t.id === Number(id))
     if (index === -1) return null
@@ -38,7 +40,7 @@ exports.updateTurno = (id, data) => {
     return turnos[index]
 }
 
-exports.deleteTurno = (id) => {
+export const deleteTurno = (id) => {
     const turnos = getTurnos()
     const index = turnos.findIndex((t) => t.id_turno === Number(id))
     if (index === -1) return false

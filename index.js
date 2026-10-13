@@ -1,22 +1,27 @@
-const express = require('express')
-const app = express()
-const profesionalesRouter = require('./routes/profesionales.route')
-const clientesRouter = require('./routes/clientes.route')
-const turnosRouter = require('./routes/turnos.routes')
-const disponibilidadRouter = require('./routes/disponibilidad.route')
-const cancelacionesRouter = require('./routes/cancelaciones.route')
-const connectDB = require('./mongo/client')
-const handleErrors = require('./middlewares/handleErrors')
+import express from "express";
+import dotenv from "dotenv";
+import profesionalesRouter from "./routes/profesionales.route.js";
+import clientesRouter from "./routes/clientes.route.js";
+import turnosRouter from "./routes/turnos.routes.js";
+import disponibilidadRouter from "./routes/disponibilidad.route.js";
+import cancelacionesRouter from "./routes/cancelaciones.route.js";
+import connectDB from "./mongo/client.js";
+import handleErrors from "./middlewares/handleErrors.js";
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'pug')
 app.set('views', './views')
 
-// conexion a mongodb
+// Middleware para parsear JSON y formularios HTML
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-connectDB()
-
-// Middleware para parsear JSON
-app.use(express.json())
+// Archivos estáticos (CSS + JS del front)
+app.use(express.static("public"));
 
 // Ruta básica
 app.get('/', (req, res) => {
@@ -31,7 +36,10 @@ app.use('/cancelaciones', cancelacionesRouter)
 app.use('/turnos', turnosRouter)
 app.use('/disponibilidades', disponibilidadRouter)
 
-app.use(handleErrors)
+app.use(handleErrors);
+
+// Conectamos a Mongo antes de levantar el servidor
+await connectDB();
 
 // Puerto de escucha
 app.listen(3000, () => {
