@@ -99,3 +99,14 @@ export const deleteProfesional = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+// Vistas
+export const renderProfesionales = async (req, res) => {
+  const profesionales = await profesionalesService.getAll();
+  res.render("profesionales", { profesionales });
+}
+
+export const renderProfesionalById = async (req, res) => {
+  const profesional = await profesionalesService.getById(req.params.id);
+  res.render("profesional-detalle", { profesional });
+}

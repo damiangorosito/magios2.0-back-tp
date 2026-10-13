@@ -150,6 +150,18 @@ class DisponibilidadController {
       responderError(res, error);
     }
   }
+
+  
+  // Vistas
+  async renderDisponibilidades(req, res) {
+    const disponibilidades = await disponibilidadService.getAll();
+    res.render("disponibilidades", { disponibilidades });
+  }
+
+  async renderDisponibilidadById(req, res) {
+    const disponibilidad = await disponibilidadService.getById(req.params.id);
+    res.render("disponibilidad-detalle", { disponibilidad });
+  }
 }
 
 export default DisponibilidadController;

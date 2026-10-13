@@ -3,10 +3,15 @@ import * as profesionalesController from "../controllers/profesionales.controlle
 
 const router = express.Router();
 
-router.get('/', profesionalesController.getProfesionales);
-router.get('/:id', profesionalesController.getProfesionalById);
-router.post('/', profesionalesController.createProfesional);
-router.put('/:id', profesionalesController.updateProfesional);
-router.delete('/:id', profesionalesController.deleteProfesional);
+// API JSON
+router.get('/api/', profesionalesController.getProfesionales);
+router.get('/api/:id', profesionalesController.getProfesionalById);
+router.post('/api/', profesionalesController.createProfesional);
+router.put('/api/:id', profesionalesController.updateProfesional);
+router.delete('/api/:id', profesionalesController.deleteProfesional);
+
+// Vistas (solo muestra + formularios)
+router.get('/vista', profesionalesController.renderProfesionales);
+router.get('/vista/:id', profesionalesController.renderProfesionalById);
 
 export default router;
