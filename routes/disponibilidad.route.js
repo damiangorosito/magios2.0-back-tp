@@ -4,13 +4,17 @@ import DisponibilidadController from "../controllers/disponibilidad.controller.j
 const router = express.Router();
 const disponibilidadController = new DisponibilidadController();
 
-// Rutas específicas primero
-router.get('/', disponibilidadController.getAll);
-router.get('/profesional/:profesionalId', disponibilidadController.getByProfesional);
-router.get('/dia/:dia', disponibilidadController.getByDia);
-router.get('/:id', disponibilidadController.getById);
-router.post('/', disponibilidadController.create);
-router.put('/:id', disponibilidadController.update);
-router.delete('/:id', disponibilidadController.delete);
+// API JSON (rutas específicas primero)
+router.get('/api/', disponibilidadController.getAll);
+router.get('/api/profesional/:profesionalId', disponibilidadController.getByProfesional);
+router.get('/api/dia/:dia', disponibilidadController.getByDia);
+router.get('/api/:id', disponibilidadController.getById);
+router.post('/api/', disponibilidadController.create);
+router.put('/api/:id', disponibilidadController.update);
+router.delete('/api/:id', disponibilidadController.delete);
+
+// Vistas (solo muestra + formularios)
+router.get('/vista', disponibilidadController.renderDisponibilidades);
+router.get('/vista/:id', disponibilidadController.renderDisponibilidadById);
 
 export default router;
